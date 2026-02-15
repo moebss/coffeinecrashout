@@ -185,7 +185,7 @@ const caffeineCalc = (() => {
                 // Timeline
                 timeline: buildTimeline(caffeineMg, gender, age),
                 // Fun fact
-                funFactIndex: Math.floor(Math.random() * 8),
+                funFactIndex: Math.floor(Math.random() * 24),
                 // Yearly projection
                 yearlyKg: ((caffeineMg * 365) / 1000).toFixed(1)
             };
