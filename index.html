@@ -244,6 +244,26 @@
         </footer>
     </div>
 
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data:; object-src 'none';">
+
+    <!-- Wrapped Preview Modal -->
+    <div id="wrappedModal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <span class="close-modal">&times;</span>
+            <h2 data-i18n="result.wrappedTitle">Dein Koffein-Report 2026</h2>
+            <div class="modal-body">
+                <img id="wrappedPreviewImg" src="" alt="Caffeine Wrapped Preview">
+            </div>
+            <div class="modal-actions">
+                <button id="downloadWrappedBtn" class="btn-cta">
+                    💾 <span data-i18n="share.screenshot">Speichern</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="js/caffeineCalc.js"></script>
     <script src="js/app.js"></script>
