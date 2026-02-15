@@ -216,10 +216,10 @@ function renderRiskGauge(r) {
 
     // Set gauge color & width
     const colors = {
-        low: '#00ff88',
-        moderate: '#ffcc00',
-        high: '#ff6644',
-        extreme: '#ff2244'
+        low: '#66BB6A',
+        moderate: '#FFC107',
+        high: '#FF8A65',
+        extreme: '#E53935'
     };
 
     gauge.style.setProperty('--gauge-color', colors[r.riskKey]);
@@ -258,14 +258,14 @@ function renderTimeline(timeline) {
             datasets: [{
                 label: 'Caffeine (mg)',
                 data: timeline.data,
-                borderColor: '#00ff88',
+                borderColor: '#81C784',
                 backgroundColor: (context) => {
                     const chart = context.chart;
                     const { ctx: c, chartArea } = chart;
-                    if (!chartArea) return 'rgba(0,255,136,0.1)';
+                    if (!chartArea) return 'rgba(129,199,132,0.1)';
                     const gradient = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                    gradient.addColorStop(0, 'rgba(0,255,136,0.3)');
-                    gradient.addColorStop(1, 'rgba(0,255,136,0.01)');
+                    gradient.addColorStop(0, 'rgba(129,199,132,0.35)');
+                    gradient.addColorStop(1, 'rgba(129,199,132,0.02)');
                     return gradient;
                 },
                 fill: true,
@@ -282,7 +282,7 @@ function renderTimeline(timeline) {
             plugins: {
                 legend: { display: false },
                 tooltip: {
-                    backgroundColor: 'rgba(15,15,35,0.95)',
+                    backgroundColor: 'rgba(62,39,35,0.9)',
                     titleFont: { family: "'Inter', sans-serif", size: 13 },
                     bodyFont: { family: "'Inter', sans-serif", size: 12 },
                     padding: 12,
@@ -294,12 +294,12 @@ function renderTimeline(timeline) {
             },
             scales: {
                 x: {
-                    grid: { color: 'rgba(255,255,255,0.05)' },
-                    ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 11 } }
+                    grid: { color: 'rgba(161,136,127,0.1)' },
+                    ticks: { color: '#A1887F', font: { size: 11 } }
                 },
                 y: {
-                    grid: { color: 'rgba(255,255,255,0.05)' },
-                    ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 11 } },
+                    grid: { color: 'rgba(161,136,127,0.1)' },
+                    ticks: { color: '#A1887F', font: { size: 11 } },
                     beginAtZero: true
                 }
             },
@@ -356,7 +356,7 @@ function initShare() {
 
         try {
             const canvas = await html2canvas(card, {
-                backgroundColor: '#0f0f23',
+                backgroundColor: '#F5F5F5',
                 scale: 2,
                 useCORS: true
             });
@@ -434,11 +434,11 @@ function initParticles() {
         return {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: -Math.random() * 0.5 - 0.1,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: -Math.random() * 0.3 - 0.05,
             radius: Math.random() * 2 + 0.5,
-            alpha: Math.random() * 0.5 + 0.1,
-            color: ['#00ff88', '#ffcc00', '#ff6644', '#6366f1'][Math.floor(Math.random() * 4)]
+            alpha: Math.random() * 0.25 + 0.05,
+            color: ['#81C784', '#A1887F', '#FFD54F', '#D7CCC8'][Math.floor(Math.random() * 4)]
         };
     }
 

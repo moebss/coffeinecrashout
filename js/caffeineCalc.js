@@ -181,10 +181,10 @@ function generateTimeline(totalMg) {
         data.push(Math.round(level));
 
         // Color based on level
-        if (level < 100) colors.push('#00ff88');
-        else if (level < 250) colors.push('#ffcc00');
-        else if (level < 400) colors.push('#ff6644');
-        else colors.push('#ff2244');
+        if (level < 100) colors.push('#66BB6A');
+        else if (level < 250) colors.push('#FFC107');
+        else if (level < 400) colors.push('#FF8A65');
+        else colors.push('#E53935');
     }
 
     return { labels, data, colors };
