@@ -1,24 +1,29 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CaffeineCrashout – Wie viel Koffein verträgt dein Körper?</title>
+    <title>CaffeineCrashout – How much caffeine can your body REALLY handle?</title>
     <meta name="description"
-        content="Finde heraus, wie viel Koffein dein Körper wirklich verträgt. Virale Koffein-Risikoanalyse mit Timeline, Badges und teilbaren Ergebnissen.">
+        content="Find out how much caffeine your body can really handle. Viral caffeine risk analysis with timeline, badges, and shareable results.">
+    <meta name="keywords"
+        content="caffeine, calculator, wrapped, crashout, coffee, energy drink, limit, health, analysis">
     <meta name="theme-color" content="#F5F5F5">
+    <link rel="canonical" href="https://caffeinecrashout.xyz/">
 
     <!-- Open Graph -->
     <meta property="og:title" content="CaffeineCrashout ☕">
-    <meta property="og:description" content="Wie viel Koffein verträgt dein Körper wirklich?">
+    <meta property="og:description" content="How much caffeine can your body really handle?">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://caffeinecrashout.xyz/">
+    <meta property="og:image" content="https://caffeinecrashout.xyz/preview.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700&display=swap"
         rel="stylesheet">
 
     <!-- Chart.js -->
@@ -26,6 +31,9 @@
 
     <!-- html2canvas for screenshots -->
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
@@ -47,8 +55,8 @@
         <section id="landingSection" class="landing">
             <div class="landing-logo">☕</div>
             <h1 data-i18n="app.title">CaffeineCrashout</h1>
-            <p class="subtitle" data-i18n="app.subtitle">Wie viel Koffein verträgt dein Körper wirklich?</p>
-            <button class="btn-cta" id="ctaBtn" data-i18n="app.cta">Jetzt checken ☕</button>
+            <p class="subtitle" data-i18n="app.subtitle">How much caffeine can your body REALLY handle?</p>
+            <button class="btn-cta" id="ctaBtn" data-i18n="app.cta">Check now ☕</button>
         </section>
 
         <!-- ===========================
@@ -56,66 +64,66 @@
              =========================== -->
         <section id="inputSection" class="hidden">
             <div class="glass-card">
-                <h2 class="section-title">📋 <span data-i18n="input.title">Dein Profil</span></h2>
+                <h2 class="section-title">📋 <span data-i18n="input.title">Your Profile</span></h2>
 
                 <form id="inputForm" autocomplete="off">
                     <!-- Height -->
                     <div class="form-group">
-                        <label class="form-label" for="heightInput" data-i18n="input.height">Größe (cm)</label>
+                        <label class="form-label" for="heightInput" data-i18n="input.height">Height (cm)</label>
                         <input class="form-input" type="number" id="heightInput" min="100" max="250"
-                            data-i18n="input.heightPlaceholder" placeholder="z.B. 175">
+                            data-i18n="input.heightPlaceholder" placeholder="e.g. 175">
                     </div>
 
                     <!-- Gender -->
                     <div class="form-group">
-                        <label class="form-label" data-i18n="input.gender">Geschlecht</label>
+                        <label class="form-label" data-i18n="input.gender">Gender</label>
                         <div class="gender-group">
                             <div class="gender-option">
                                 <input type="radio" name="gender" value="male" id="genderMale">
-                                <label for="genderMale" data-i18n="input.genderMale">Männlich</label>
+                                <label for="genderMale" data-i18n="input.genderMale">Male</label>
                             </div>
                             <div class="gender-option">
                                 <input type="radio" name="gender" value="female" id="genderFemale">
-                                <label for="genderFemale" data-i18n="input.genderFemale">Weiblich</label>
+                                <label for="genderFemale" data-i18n="input.genderFemale">Female</label>
                             </div>
                             <div class="gender-option">
                                 <input type="radio" name="gender" value="diverse" id="genderDiverse" checked>
-                                <label for="genderDiverse" data-i18n="input.genderDiverse">Divers</label>
+                                <label for="genderDiverse" data-i18n="input.genderDiverse">Diverse</label>
                             </div>
                         </div>
                     </div>
 
                     <!-- Age -->
                     <div class="form-group">
-                        <label class="form-label" for="ageInput" data-i18n="input.age">Alter</label>
+                        <label class="form-label" for="ageInput" data-i18n="input.age">Age</label>
                         <input class="form-input" type="number" id="ageInput" min="12" max="100"
-                            data-i18n="input.agePlaceholder" placeholder="z.B. 25">
+                            data-i18n="input.agePlaceholder" placeholder="e.g. 25">
                     </div>
 
                     <!-- Weight -->
                     <div class="form-group">
-                        <label class="form-label" for="weightInput" data-i18n="input.weight">Gewicht (kg)</label>
+                        <label class="form-label" for="weightInput" data-i18n="input.weight">Weight (kg)</label>
                         <input class="form-input" type="number" id="weightInput" min="20" max="300"
-                            data-i18n="input.weightPlaceholder" placeholder="z.B. 70">
+                            data-i18n="input.weightPlaceholder" placeholder="e.g. 70">
                     </div>
 
                     <!-- Caffeine mg -->
                     <div class="form-group">
-                        <label class="form-label" for="caffeineInput" data-i18n="input.caffeine">Täglicher
-                            Koffeinkonsum</label>
+                        <label class="form-label" for="caffeineInput" data-i18n="input.caffeine">Daily Caffeine
+                            Intake</label>
                         <input class="form-input" type="number" id="caffeineInput" min="0" max="5000"
                             data-i18n="input.caffeinePlaceholder" placeholder="z.B. 400">
                     </div>
 
                     <!-- Drink Selector -->
-                    <div class="drink-divider" data-i18n="input.orChooseDrinks">oder wähle deine Getränke:</div>
+                    <div class="drink-divider" data-i18n="input.orChooseDrinks">or choose your drinks:</div>
                     <div class="drink-grid" id="drinkGrid">
                         <!-- Generated by JS -->
                     </div>
 
                     <!-- Submit -->
-                    <button type="button" class="btn-calculate" id="calculateBtn" data-i18n="input.calculate">Analyse
-                        starten 🔬</button>
+                    <button type="button" class="btn-calculate" id="calculateBtn" data-i18n="input.calculate">Run
+                        analysis 🔬</button>
                 </form>
             </div>
         </section>
@@ -129,14 +137,14 @@
             <div id="resultCard">
                 <!-- Header -->
                 <div class="result-header result-animate">
-                    <h2 data-i18n="result.title">Dein Koffein-Report</h2>
+                    <h2 data-i18n="result.title">Your Caffeine Report</h2>
                     <div id="badgeDisplay" class="badge badge-low">☕ Casual Sipper</div>
                 </div>
 
                 <!-- Risk Gauge -->
                 <div class="glass-card result-animate" id="riskGauge">
-                    <div class="risk-label" id="riskLabel">Tiefenentspannt</div>
-                    <div class="risk-desc" id="riskDesc">Alles safe.</div>
+                    <div class="risk-label" id="riskLabel">Totally Chill</div>
+                    <div class="risk-desc" id="riskDesc">All good.</div>
                     <div class="gauge-container">
                         <div class="gauge-track">
                             <div class="gauge-fill"></div>
@@ -154,19 +162,19 @@
                 <div class="stats-grid result-animate">
                     <div class="stat-card">
                         <div class="stat-value" id="statIntake">0 mg</div>
-                        <div class="stat-label" data-i18n="result.dailyIntake">Tägliche Aufnahme</div>
+                        <div class="stat-label" data-i18n="result.dailyIntake">Daily Intake</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="statPerKg">0 mg/kg</div>
-                        <div class="stat-label" data-i18n="result.perKg">pro kg Körpergewicht</div>
+                        <div class="stat-label" data-i18n="result.perKg">per kg body weight</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="statLimit">400 mg</div>
-                        <div class="stat-label" data-i18n="result.safeLimit">Empfohlenes Limit</div>
+                        <div class="stat-label" data-i18n="result.safeLimit">Recommended Limit</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="statOverLimit">0%</div>
-                        <div class="stat-label">% vom Limit</div>
+                        <div class="stat-label">% of limit</div>
                     </div>
                 </div>
 
@@ -178,18 +186,18 @@
                 <!-- Effects -->
                 <div class="glass-card result-animate">
                     <div class="effects-section">
-                        <div class="effects-title" data-i18n="result.shortTerm">Kurzzeit-Effekte</div>
+                        <div class="effects-title" data-i18n="result.shortTerm">Short-term Effects</div>
                         <div class="effects-grid" id="shortTermEffects"></div>
                     </div>
                     <div class="effects-section" style="margin-top: 20px;">
-                        <div class="effects-title" data-i18n="result.longTerm">Langzeit-Risiken</div>
+                        <div class="effects-title" data-i18n="result.longTerm">Long-term Risks</div>
                         <div class="effects-grid" id="longTermEffects"></div>
                     </div>
                 </div>
 
                 <!-- Timeline -->
                 <div class="glass-card result-animate">
-                    <h3 class="section-title">📊 <span data-i18n="result.timeline">Dein Koffein-Tagesverlauf</span>
+                    <h3 class="section-title">📊 <span data-i18n="result.timeline">Your Caffeine Timeline</span>
                     </h3>
                     <div class="chart-container">
                         <canvas id="timelineChart"></canvas>
@@ -208,16 +216,16 @@
             <!-- Caffeine Wrapped -->
             <div class="glass-card result-animate wrapped-section">
                 <h3 class="section-title">🎨 <span>Caffeine Wrapped</span></h3>
-                <p class="wrapped-desc">Erstelle dein persönliches Koffein-Wrapped als Bild für Instagram Stories,
+                <p class="wrapped-desc">Create your personal Caffeine Wrapped as an image for Instagram Stories,
                     WhatsApp & Co.</p>
                 <button class="btn-wrapped" id="wrappedBtn">
-                    ☕ Erstelle dein Caffeine Wrapped
+                    ☕ Create your Caffeine Wrapped
                 </button>
-                <p class="wrapped-hint">1080 × 1920 px · PNG · Instagram-Story-Format</p>
+                <p class="wrapped-hint">1080 × 1920 px · PNG · Instagram Story Format</p>
             </div>
 
             <!-- New Analysis -->
-            <button class="btn-new" id="newAnalysisBtn" data-i18n="result.newAnalysis">Neue Analyse</button>
+            <button class="btn-new" id="newAnalysisBtn" data-i18n="result.newAnalysis">New Analysis</button>
         </section>
 
         <footer class="footer">
@@ -228,13 +236,14 @@
                 <button class="lang-btn" data-lang="fr" title="Français">🇫🇷</button>
             </div>
 
-            <p data-i18n="footer.disclaimer">⚠️ Diese App ersetzt keine ärztliche Beratung. Alle Angaben ohne Gewähr.
+            <p data-i18n="footer.disclaimer">⚠️ This app does not replace medical advice. All information without
+                guarantee.
             </p>
 
             <div class="footer-links">
-                <a href="impressum.html" data-i18n="footer.imprint">Impressum</a>
+                <a href="impressum.html" data-i18n="footer.imprint">Imprint</a>
                 <span class="separator">•</span>
-                <a href="datenschutz.html" data-i18n="footer.privacy">Datenschutz</a>
+                <a href="datenschutz.html" data-i18n="footer.privacy">Privacy</a>
             </div>
 
             <p class="made-with">
@@ -244,20 +253,16 @@
         </footer>
     </div>
 
-    <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data:; object-src 'none';">
-
     <!-- Wrapped Preview Container (Inline) -->
     <div id="wrappedPreviewContainer" class="wrapped-preview hidden">
-        <h3 data-i18n="result.wrappedTitle">Dein Koffein-Report 2026</h3>
+        <h3 data-i18n="result.wrappedTitle">Your Caffeine Report 2026</h3>
         <img id="wrappedPreviewImg" src="" alt="Caffeine Wrapped Preview">
         <div class="preview-actions">
             <button id="downloadWrappedBtn" class="btn-cta">
-                💾 <span data-i18n="share.screenshot">Speichern</span>
+                💾 <span data-i18n="share.screenshot">Save</span>
             </button>
             <button id="closePreviewBtn" class="btn-secondary">
-                ❌ Schließen
+                ❌ Close
             </button>
         </div>
     </div>
