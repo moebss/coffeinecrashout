@@ -316,6 +316,10 @@ function initWrapped() {
 
 async function generateWrapped() {
     if (!analysisResult) return;
+
+    // Ensure fonts are loaded
+    await document.fonts.ready;
+
     const r = analysisResult;
 
     const W = 1080, H = 1920;
@@ -520,11 +524,42 @@ async function generateWrapped() {
     ctx.fillStyle = barGrad;
     ctx.fillRect(0, H - 12, W, 12);
 
-    // ── Download ──
-    const link = document.createElement('a');
-    link.download = `caffeine-wrapped-${Date.now()}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+    // ── Show Inline Preview ──
+    const dataUrl = canvas.toDataURL('image/png');
+    const previewContainer = document.getElementById('wrappedPreviewContainer');
+    const previewImg = document.getElementById('wrappedPreviewImg');
+    const downloadBtn = document.getElementById('downloadWrappedBtn');
+    const closeBtn = document.getElementById('closePreviewBtn');
+
+    if (previewContainer && previewImg) {
+        previewImg.src = dataUrl;
+        previewContainer.classList.remove('hidden');
+
+        // Scroll to preview
+        previewContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Setup download button
+        downloadBtn.onclick = () => {
+            const link = document.createElement('a');
+            link.download = `caffeine-wrapped-${Date.now()}.png`;
+            link.href = dataUrl;
+            link.click();
+        };
+
+        // Setup close button
+        if (closeBtn) {
+            closeBtn.onclick = () => {
+                previewContainer.classList.add('hidden');
+                document.getElementById('wrappedBtn').scrollIntoView({ behavior: 'smooth' });
+            };
+        }
+    } else {
+        // Fallback
+        const link = document.createElement('a');
+        link.download = `caffeine-wrapped-${Date.now()}.png`;
+        link.href = dataUrl;
+        link.click();
+    }
 }
 
 // Canvas helpers
