@@ -126,6 +126,134 @@ function calculatePercentile(caffeineMg) {
     return Math.max(1, Math.min(99, percentile));
 }
 
+const caffeineCalc = {
+    // Watson Formula for Total Body Water (TBW) in Liters
+    calculateTBW: (weight, height, age, gender) => {
+        // height in cm, weight in kg, age in years
+        if (gender === 'male') {
+            return 2.447 - (0.09156 * age) + (0.1074 * height) + (0.3362 * weight);
+        } else {
+            // Female formula (Watson)
+            return -2.097 + (0.1069 * height) + (0.2466 * weight);
+        }
+    },
+
+    // Calculate Personalized Limit based on TBW and Metabolism
+    calculateLimit: (weight, tbw, gender, age) => {
+        // Base safe limit (EFSA single dose) ~ 3mg/kg to 5.7mg/kg
+        // We refine this:
+        // 1. TBW factor: Higher water % -> better distribution -> slightly higher tolerance
+        // 2. Metabolism factor: 
+        //    - Females metabolize slower (-15% tolerance)
+        //    - Age > 30 metabolizes slower (-1% per year)
+
+        const baseLimit = weight * 5.7; // EFSA upper single dose
+        const waterRatio = tbw / weight; // 0.5 - 0.7 usually
+
+        let adjustedLimit = baseLimit * (waterRatio / 0.6); // Normalize to 60% water
+
+        // Gender adjustment
+        if (gender === 'female') adjustedLimit *= 0.85;
+
+        // Age adjustment (after 30)
+        if (age > 30) {
+            const ageFactor = Math.max(0.7, 1 - ((age - 30) * 0.01)); // Max 30% reduction
+            adjustedLimit *= ageFactor;
+        }
+
+        return Math.round(adjustedLimit);
+    },
+
+    analyze: (weight, height, age, gender, caffeineMg) => {
+        const tbw = caffeineCalc.calculateTBW(weight, height, age, gender);
+        const limit = caffeineCalc.calculateLimit(weight, tbw, gender, age);
+
+        // Calculate concentration (mg/L in TBW) - highly simplified theoretical peak
+        const concentration = caffeineMg / tbw;
+
+        // Calculate percentages
+        const percentage = Math.round((caffeineMg / limit) * 100);
+
+        // Risk Levels based on percentage of PERSONAL limit
+        let riskLevel = '';
+        let riskColor = '';
+        let riskKey = '';
+
+        if (percentage < 40) {
+            riskLevel = 'Safe';
+            riskColor = 'var(--sage)';
+            riskKey = 'low';
+        } else if (percentage < 80) {
+            riskLevel = 'Moderate';
+            riskColor = 'var(--gold)';
+            riskKey = 'moderate';
+        } else if (percentage < 120) {
+            riskLevel = 'High';
+            riskColor = 'var(--orange)';
+            riskKey = 'high';
+        } else {
+            riskLevel = 'Extreme';
+            riskColor = 'var(--red)';
+            riskKey = 'extreme';
+        }
+
+        return {
+            limit,
+            percentage,
+            riskLevel,
+            riskColor,
+            riskKey,
+            tbw: tbw.toFixed(1),
+            concentration: concentration.toFixed(1)
+        };
+    },
+
+    getTimeline: (totalMg, wakeupTime = 6, gender = 'male', age = 30) => {
+        // Metabolism Half-Life calculation
+        let halfLife = 5; // Base 5 hours
+
+        // Adjust half-life
+        if (gender === 'female') halfLife *= 1.2; // +20% slower
+        if (age > 40) halfLife *= 1.1; // Slower with age
+        if (age > 60) halfLife *= 1.1;
+
+        const labels = [];
+        const data = [];
+        const colors = [];
+
+        for (let i = 0; i <= 18; i++) { // 6:00 to 24:00
+            const time = wakeupTime + i;
+            labels.push(`${time}:00`);
+
+            // Decay formula: N(t) = N0 * (1/2)^(t / halfLife)
+            // Assuming peak is reached at 30-60 mins (let's say t=0 for simplicity of daily view)
+            // But usually people drink throughout. Simplified: Single dose at wakeup + smaller doses?
+            // For this app: assume totalMg is taken effectively at start (worst case peak) or distributed.
+            // Let's model a simplified curve: Peak at +1h, then decay.
+
+            let timeSinceIntake = i;
+            let level = 0;
+
+            if (timeSinceIntake < 0) level = 0;
+            else if (timeSinceIntake < 1) level = totalMg * (timeSinceIntake / 1); // Linear absorption
+            else {
+                // Decay
+                level = totalMg * Math.pow(0.5, (timeSinceIntake - 1) / halfLife);
+            }
+
+            data.push(Math.round(level));
+
+            // Color based on level relative to generic 400mg threshold for visual
+            if (level < 100) colors.push('#66BB6A');
+            else if (level < 250) colors.push('#FFC107');
+            else if (level < 400) colors.push('#FF8A65');
+            else colors.push('#E53935');
+        }
+
+        return { labels, data, colors, halfLife: halfLife.toFixed(1) };
+    }
+};
+
 function getShortTermEffects(mgPerKg) {
     const effects = [];
     if (mgPerKg >= 1) effects.push('alertness');

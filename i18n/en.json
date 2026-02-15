@@ -17,6 +17,8 @@
         "orChooseDrinks": "or choose your drinks:",
         "calculate": "Run analysis 🔬",
         "heightPlaceholder": "e.g. 175",
+        "age": "Age",
+        "agePlaceholder": "e.g. 25",
         "weightPlaceholder": "e.g. 70",
         "caffeinePlaceholder": "e.g. 400"
     },
@@ -36,7 +38,8 @@
         "riskLevel": "Risk Level",
         "dailyIntake": "Daily Intake",
         "perKg": "per kg body weight",
-        "safeLimit": "Recommended Limit",
+        "safeLimit": "Your Limit (calc.)",
+        "tbwConcentration": "TBW Concentration",
         "comparison": "You consume more caffeine than {percent}% of the population.",
         "comparisonLow": "Your intake is within the normal range. You're good! ☕",
         "timeline": "Your Caffeine Timeline",

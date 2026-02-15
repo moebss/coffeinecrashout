@@ -77,7 +77,17 @@ function renderDrinkSelector() {
     if (!container) return;
     container.innerHTML = '';
 
-    const drinks = CaffeineCalc.DRINK_CAFFEINE;
+    const drinks = {
+        espresso: 63,
+        coffee: 95,
+        cappuccino: 63, // usually 1 shot
+        latte: 63,
+        energyDrink: 80, // 250ml
+        cola: 35, // 330ml
+        tea: 45, // black tea
+        mateLemonade: 100, // 500ml
+        decaf: 3
+    };
 
     for (const [key, mg] of Object.entries(drinks)) {
         const count = drinkCounts[key] || 0;
@@ -131,6 +141,7 @@ function initForm() {
 
         const weight = parseFloat(document.getElementById('weightInput').value);
         const height = parseFloat(document.getElementById('heightInput').value);
+        const age = parseFloat(document.getElementById('ageInput').value) || 30; // Default 30 if empty
         const caffeine = parseFloat(document.getElementById('caffeineInput').value);
         const gender = document.querySelector('input[name="gender"]:checked')?.value || 'diverse';
 
@@ -139,13 +150,21 @@ function initForm() {
             shakeElement(document.getElementById('weightInput'));
             return;
         }
+        if (!height || height < 100 || height > 250) {
+            shakeElement(document.getElementById('heightInput'));
+            return;
+        }
         if (!caffeine || caffeine < 0) {
             shakeElement(document.getElementById('caffeineInput'));
             return;
         }
 
         // Calculate
-        analysisResult = CaffeineCalc.analyzeCaffeine(weight, caffeine, gender);
+        analysisResult = caffeineCalc.analyze(weight, height, age, gender, caffeine);
+
+        // Timeline with age/gender factors
+        analysisResult.timeline = caffeineCalc.getTimeline(caffeine, 6, gender, age);
+
         showResults();
     });
 }
@@ -174,10 +193,10 @@ function showResults() {
     renderRiskGauge(r);
 
     // Stats
-    document.getElementById('statIntake').textContent = `${r.caffeineMg} mg`;
-    document.getElementById('statPerKg').textContent = `${r.effectiveMgPerKg} mg/kg`;
-    document.getElementById('statLimit').textContent = `${r.safeDailyMax} mg`;
-    document.getElementById('statOverLimit').textContent = `${r.overLimitPercent}%`;
+    document.getElementById('statIntake').textContent = `${r.caffeineMg || document.getElementById('caffeineInput').value} mg`;
+    document.getElementById('statPerKg').textContent = `${r.concentration} mg/L`; // TBW Concentration
+    document.getElementById('statLimit').textContent = `${r.limit} mg`;
+    document.getElementById('statOverLimit').textContent = `${r.percentage}%`;
 
     // Comparison text
     const compEl = document.getElementById('comparison');
@@ -379,14 +398,16 @@ function getShareText() {
 
     if (currentLang === 'de') {
         return `☕ Mein CoffeineCrashout-Ergebnis: ${badge}\n` +
-            `Risikostufe: ${risk}\n` +
-            `${r.caffeineMg}mg Koffein/Tag (${r.effectiveMgPerKg} mg/kg)\n\n` +
+            `Risiko: ${risk}\n` +
+            `Konsum: ${document.getElementById('caffeineInput').value}mg\n` +
+            `Mein Limit: ${r.limit}mg (Wasseranteil: ${r.tbw}L)\n\n` +
             `Wie viel verträgst du? 👉 coffeinecrashout.vercel.app`;
     } else {
-        return `☕ My CoffeineCrashout result: ${badge}\n` +
-            `Risk level: ${risk}\n` +
-            `${r.caffeineMg}mg caffeine/day (${r.effectiveMgPerKg} mg/kg)\n\n` +
-            `How much can YOU handle? 👉 coffeinecrashout.vercel.app`;
+        return `☕ ${badge}\n` +
+            `Risk: ${risk}\n` +
+            `Intake: ${document.getElementById('caffeineInput').value}mg\n` +
+            `Tolerance: ${r.limit}mg (TBW: ${r.tbw}L)\n\n` +
+            `Check your limit 👉 coffeinecrashout.vercel.app`;
     }
 }
 
