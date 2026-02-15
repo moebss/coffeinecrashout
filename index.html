@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoffeineCrashout – Wie viel Koffein verträgt dein Körper?</title>
+    <meta name="description"
+        content="Finde heraus, wie viel Koffein dein Körper wirklich verträgt. Virale Koffein-Risikoanalyse mit Timeline, Badges und teilbaren Ergebnissen.">
+    <meta name="theme-color" content="#0f0f23">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="CoffeineCrashout ☕">
+    <meta property="og:description" content="Wie viel Koffein verträgt dein Körper wirklich?">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- html2canvas for screenshots -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+</head>
+
+<body>
+    <!-- Particle Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="container">
+
+        <!-- ===========================
+             LANDING SECTION
+             =========================== -->
+        <section id="landingSection" class="landing">
+            <div class="landing-logo">☕</div>
+            <h1 data-i18n="app.title">CoffeineCrashout</h1>
+            <p class="subtitle" data-i18n="app.subtitle">Wie viel Koffein verträgt dein Körper wirklich?</p>
+            <button class="btn-cta" id="ctaBtn" data-i18n="app.cta">Jetzt checken ☕</button>
+        </section>
+
+        <!-- ===========================
+             INPUT SECTION
+             =========================== -->
+        <section id="inputSection" class="hidden">
+            <div class="glass-card">
+                <h2 class="section-title">📋 <span data-i18n="input.title">Dein Profil</span></h2>
+
+                <form id="inputForm" autocomplete="off">
+                    <!-- Height -->
+                    <div class="form-group">
+                        <label class="form-label" for="heightInput" data-i18n="input.height">Größe (cm)</label>
+                        <input class="form-input" type="number" id="heightInput" min="100" max="250"
+                            data-i18n="input.heightPlaceholder" placeholder="z.B. 175">
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="input.gender">Geschlecht</label>
+                        <div class="gender-group">
+                            <div class="gender-option">
+                                <input type="radio" name="gender" value="male" id="genderMale">
+                                <label for="genderMale" data-i18n="input.genderMale">Männlich</label>
+                            </div>
+                            <div class="gender-option">
+                                <input type="radio" name="gender" value="female" id="genderFemale">
+                                <label for="genderFemale" data-i18n="input.genderFemale">Weiblich</label>
+                            </div>
+                            <div class="gender-option">
+                                <input type="radio" name="gender" value="diverse" id="genderDiverse" checked>
+                                <label for="genderDiverse" data-i18n="input.genderDiverse">Divers</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weight -->
+                    <div class="form-group">
+                        <label class="form-label" for="weightInput" data-i18n="input.weight">Gewicht (kg)</label>
+                        <input class="form-input" type="number" id="weightInput" min="20" max="300"
+                            data-i18n="input.weightPlaceholder" placeholder="z.B. 70">
+                    </div>
+
+                    <!-- Caffeine mg -->
+                    <div class="form-group">
+                        <label class="form-label" for="caffeineInput" data-i18n="input.caffeine">Täglicher
+                            Koffeinkonsum</label>
+                        <input class="form-input" type="number" id="caffeineInput" min="0" max="5000"
+                            data-i18n="input.caffeinePlaceholder" placeholder="z.B. 400">
+                    </div>
+
+                    <!-- Drink Selector -->
+                    <div class="drink-divider" data-i18n="input.orChooseDrinks">oder wähle deine Getränke:</div>
+                    <div class="drink-grid" id="drinkGrid">
+                        <!-- Generated by JS -->
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="button" class="btn-calculate" id="calculateBtn" data-i18n="input.calculate">Analyse
+                        starten 🔬</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ===========================
+             RESULT SECTION
+             =========================== -->
+        <section id="resultSection" class="result-section hidden">
+
+            <!-- Result Card (screenshot target) -->
+            <div id="resultCard">
+                <!-- Header -->
+                <div class="result-header result-animate">
+                    <h2 data-i18n="result.title">Dein Koffein-Report</h2>
+                    <div id="badgeDisplay" class="badge badge-low">☕ Casual Sipper</div>
+                </div>
+
+                <!-- Risk Gauge -->
+                <div class="glass-card result-animate" id="riskGauge">
+                    <div class="risk-label" id="riskLabel">Tiefenentspannt</div>
+                    <div class="risk-desc" id="riskDesc">Alles safe.</div>
+                    <div class="gauge-container">
+                        <div class="gauge-track">
+                            <div class="gauge-fill"></div>
+                        </div>
+                        <div class="gauge-labels">
+                            <span class="gauge-label" style="color: var(--green);">Safe</span>
+                            <span class="gauge-label" style="color: var(--yellow);">Moderate</span>
+                            <span class="gauge-label" style="color: var(--orange);">High</span>
+                            <span class="gauge-label" style="color: var(--red);">Extreme</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-grid result-animate">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statIntake">0 mg</div>
+                        <div class="stat-label" data-i18n="result.dailyIntake">Tägliche Aufnahme</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statPerKg">0 mg/kg</div>
+                        <div class="stat-label" data-i18n="result.perKg">pro kg Körpergewicht</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statLimit">400 mg</div>
+                        <div class="stat-label" data-i18n="result.safeLimit">Empfohlenes Limit</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statOverLimit">0%</div>
+                        <div class="stat-label">% vom Limit</div>
+                    </div>
+                </div>
+
+                <!-- Comparison -->
+                <div class="glass-card result-animate">
+                    <p class="comparison-text" id="comparison"></p>
+                </div>
+
+                <!-- Effects -->
+                <div class="glass-card result-animate">
+                    <div class="effects-section">
+                        <div class="effects-title" data-i18n="result.shortTerm">Kurzzeit-Effekte</div>
+                        <div class="effects-grid" id="shortTermEffects"></div>
+                    </div>
+                    <div class="effects-section" style="margin-top: 20px;">
+                        <div class="effects-title" data-i18n="result.longTerm">Langzeit-Risiken</div>
+                        <div class="effects-grid" id="longTermEffects"></div>
+                    </div>
+                </div>
+
+                <!-- Timeline -->
+                <div class="glass-card result-animate">
+                    <h3 class="section-title">📊 <span data-i18n="result.timeline">Dein Koffein-Tagesverlauf</span>
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Fun Fact -->
+                <div class="glass-card result-animate">
+                    <div class="fun-fact">
+                        <span class="fun-fact-icon">💡</span>
+                        <span id="funFact"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Share Buttons -->
+            <div class="glass-card result-animate">
+                <h3 class="section-title">📤 <span data-i18n="result.share">Ergebnis teilen</span></h3>
+                <div class="share-grid">
+                    <button class="btn-share whatsapp" id="shareWhatsApp">
+                        💬 <span data-i18n="share.whatsapp">WhatsApp</span>
+                    </button>
+                    <button class="btn-share twitter" id="shareTwitter">
+                        🐦 <span data-i18n="share.twitter">X / Twitter</span>
+                    </button>
+                    <button class="btn-share copy" id="shareCopy">
+                        📋 <span data-i18n="share.copy">Link kopieren</span>
+                    </button>
+                    <button class="btn-share screenshot" id="shareScreenshot">
+                        📸 <span data-i18n="share.screenshot">Screenshot</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- New Analysis -->
+            <button class="btn-new" id="newAnalysisBtn" data-i18n="result.newAnalysis">Neue Analyse</button>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p data-i18n="footer.disclaimer">⚠️ Diese App ersetzt keine ärztliche Beratung. Alle Angaben ohne
+                Gewähr.</p>
+            <p class="made-with" data-i18n="footer.madeWith">Made with ☕ and regret</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/caffeineCalc.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

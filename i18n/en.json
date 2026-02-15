@@ -1,0 +1,101 @@
+{
+    "app": {
+        "title": "CoffeineCrashout",
+        "subtitle": "How much caffeine can your body REALLY handle?",
+        "cta": "Check now ☕"
+    },
+    "input": {
+        "title": "Your Profile",
+        "height": "Height (cm)",
+        "weight": "Weight (kg)",
+        "gender": "Gender",
+        "genderMale": "Male",
+        "genderFemale": "Female",
+        "genderDiverse": "Diverse",
+        "caffeine": "Daily caffeine intake",
+        "caffeineUnit": "mg",
+        "orChooseDrinks": "or choose your drinks:",
+        "calculate": "Run analysis 🔬",
+        "heightPlaceholder": "e.g. 175",
+        "weightPlaceholder": "e.g. 70",
+        "caffeinePlaceholder": "e.g. 400"
+    },
+    "drinks": {
+        "coffee": "Filter Coffee",
+        "espresso": "Espresso",
+        "cappuccino": "Cappuccino",
+        "latte": "Latte Macchiato",
+        "energyDrink": "Energy Drink",
+        "cola": "Cola",
+        "tea": "Black Tea",
+        "mateLemonade": "Mate Lemonade",
+        "decaf": "Decaf"
+    },
+    "result": {
+        "title": "Your Caffeine Report",
+        "riskLevel": "Risk Level",
+        "dailyIntake": "Daily Intake",
+        "perKg": "per kg body weight",
+        "safeLimit": "Recommended Limit",
+        "comparison": "You consume more caffeine than {percent}% of the population.",
+        "comparisonLow": "Your intake is within the normal range. You're good! ☕",
+        "timeline": "Your Caffeine Timeline",
+        "shortTerm": "Short-term Effects",
+        "longTerm": "Long-term Risks",
+        "newAnalysis": "New Analysis",
+        "share": "Share Results"
+    },
+    "risk": {
+        "low": "Totally Chill",
+        "lowDesc": "All good. Your body handles this fine. ✌️",
+        "moderate": "On the Edge",
+        "moderateDesc": "Your heart is doing overtime. Maybe dial it back a notch? 💛",
+        "high": "Caffeine Warrior",
+        "highDesc": "Your body is running on overdrive. Seriously – this isn't healthy. 🔥",
+        "extreme": "Crashout Imminent",
+        "extremeDesc": "You're living on the edge. Your nervous system is screaming for help. ☠️"
+    },
+    "effects": {
+        "alertness": "⚡ Increased Alertness",
+        "heartRate": "💓 Elevated Heart Rate",
+        "tremor": "🫨 Trembling",
+        "insomnia": "😵 Insomnia",
+        "anxiety": "😰 Anxiety",
+        "dehydration": "💧 Dehydration",
+        "dependency": "🔗 Dependency",
+        "tolerance": "📈 Tolerance Build-up",
+        "withdrawal": "🤕 Withdrawal Symptoms",
+        "heartIssues": "❤️‍🩹 Heart Problems",
+        "digestive": "🤢 Digestive Issues",
+        "bloodPressure": "🩺 High Blood Pressure"
+    },
+    "badges": {
+        "casualSipper": "☕ Casual Sipper",
+        "dailyDrinker": "🥤 Daily Drinker",
+        "caffeineWarrior": "⚔️ Caffeine Warrior",
+        "espressoAddict": "💀 Espresso Addict",
+        "heartbreaker": "💔 Heartbreaker",
+        "needsHelp": "🆘 Houston, we have a problem"
+    },
+    "funFacts": [
+        "Caffeine kicks in after about 20 minutes and peaks at 45 minutes.",
+        "The half-life of caffeine is 5–6 hours.",
+        "Finland has the highest per-capita coffee consumption in the world: ~12 kg/year!",
+        "The lethal dose of caffeine is ~10g – that's about 100 cups of coffee.",
+        "Caffeine blocks adenosine receptors – that's why you crash when it wears off.",
+        "It takes about 3–5 days for your body to reset caffeine tolerance.",
+        "Espresso has MORE caffeine per ml, but LESS per serving than filter coffee.",
+        "Pregnant women are advised to limit caffeine to 200 mg per day."
+    ],
+    "share": {
+        "whatsapp": "WhatsApp",
+        "twitter": "X / Twitter",
+        "copy": "Copy Link",
+        "screenshot": "Save Screenshot",
+        "copied": "Copied! 📋"
+    },
+    "footer": {
+        "disclaimer": "⚠️ This app does not replace medical advice. All information without guarantee.",
+        "madeWith": "Made with ☕ and regret"
+    }
+}

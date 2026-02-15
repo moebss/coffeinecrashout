@@ -1,0 +1,101 @@
+{
+    "app": {
+        "title": "CoffeineCrashout",
+        "subtitle": "Wie viel Koffein verträgt dein Körper wirklich?",
+        "cta": "Jetzt checken ☕"
+    },
+    "input": {
+        "title": "Dein Profil",
+        "height": "Größe (cm)",
+        "weight": "Gewicht (kg)",
+        "gender": "Geschlecht",
+        "genderMale": "Männlich",
+        "genderFemale": "Weiblich",
+        "genderDiverse": "Divers",
+        "caffeine": "Täglicher Koffeinkonsum",
+        "caffeineUnit": "mg",
+        "orChooseDrinks": "oder wähle deine Getränke:",
+        "calculate": "Analyse starten 🔬",
+        "heightPlaceholder": "z.B. 175",
+        "weightPlaceholder": "z.B. 70",
+        "caffeinePlaceholder": "z.B. 400"
+    },
+    "drinks": {
+        "coffee": "Filterkaffee",
+        "espresso": "Espresso",
+        "cappuccino": "Cappuccino",
+        "latte": "Latte Macchiato",
+        "energyDrink": "Energy Drink",
+        "cola": "Cola",
+        "tea": "Schwarztee",
+        "mateLemonade": "Mate-Limo",
+        "decaf": "Koffeinfrei"
+    },
+    "result": {
+        "title": "Dein Koffein-Report",
+        "riskLevel": "Risikostufe",
+        "dailyIntake": "Tägliche Aufnahme",
+        "perKg": "pro kg Körpergewicht",
+        "safeLimit": "Empfohlenes Limit",
+        "comparison": "Du trinkst mehr Koffein als {percent}% der Bevölkerung.",
+        "comparisonLow": "Dein Konsum liegt im normalen Bereich. Alles easy! ☕",
+        "timeline": "Dein Koffein-Tagesverlauf",
+        "shortTerm": "Kurzzeit-Effekte",
+        "longTerm": "Langzeit-Risiken",
+        "newAnalysis": "Neue Analyse",
+        "share": "Ergebnis teilen"
+    },
+    "risk": {
+        "low": "Tiefenentspannt",
+        "lowDesc": "Alles safe. Dein Körper kommt gut klar. ✌️",
+        "moderate": "Auf der Kippe",
+        "moderateDesc": "Dein Herz arbeitet Überstunden. Vielleicht einen Gang runterschalten? 💛",
+        "high": "Koffein-Warrior",
+        "highDesc": "Dein Körper läuft auf Hochtouren. Ernsthaft – das ist nicht gesund. 🔥",
+        "extreme": "Crashout imminent",
+        "extremeDesc": "Du lebst am Limit. Dein Nervensystem schreit um Hilfe. ☠️"
+    },
+    "effects": {
+        "alertness": "⚡ Erhöhte Wachheit",
+        "heartRate": "💓 Erhöhter Puls",
+        "tremor": "🫨 Zittern",
+        "insomnia": "😵 Schlafstörungen",
+        "anxiety": "😰 Angstgefühle",
+        "dehydration": "💧 Dehydrierung",
+        "dependency": "🔗 Abhängigkeit",
+        "tolerance": "📈 Toleranzentwicklung",
+        "withdrawal": "🤕 Entzugserscheinungen",
+        "heartIssues": "❤️‍🩹 Herzprobleme",
+        "digestive": "🤢 Magen-Darm-Beschwerden",
+        "bloodPressure": "🩺 Erhöhter Blutdruck"
+    },
+    "badges": {
+        "casualSipper": "☕ Casual Sipper",
+        "dailyDrinker": "🥤 Daily Drinker",
+        "caffeineWarrior": "⚔️ Caffeine Warrior",
+        "espressoAddict": "💀 Espresso Addict",
+        "heartbreaker": "💔 Heartbreaker",
+        "needsHelp": "🆘 Houston, we have a problem"
+    },
+    "funFacts": [
+        "Koffein wirkt nach ca. 20 Minuten und erreicht nach 45 Minuten seinen Höhepunkt.",
+        "Die Halbwertszeit von Koffein beträgt 5–6 Stunden.",
+        "Finnland hat den höchsten Pro-Kopf-Kaffeekonsum der Welt: ~12 kg pro Jahr!",
+        "Die letale Dosis Koffein liegt bei ~10g – das wären etwa 100 Tassen Kaffee.",
+        "Koffein blockiert Adenosinrezeptoren – darum wirst du müde, wenn es nachlässt.",
+        "Dein Körper baut ca. 3–5 Tage lang Koffeintoleranz ab.",
+        "Espresso enthält pro ml MEHR Koffein, aber pro Tasse WENIGER als Filterkaffee.",
+        "Schwangeren wird maximal 200 mg Koffein pro Tag empfohlen."
+    ],
+    "share": {
+        "whatsapp": "WhatsApp",
+        "twitter": "X / Twitter",
+        "copy": "Link kopieren",
+        "screenshot": "Screenshot speichern",
+        "copied": "Kopiert! 📋"
+    },
+    "footer": {
+        "disclaimer": "⚠️ Diese App ersetzt keine ärztliche Beratung. Alle Angaben ohne Gewähr.",
+        "madeWith": "Made with ☕ and regret"
+    }
+}
