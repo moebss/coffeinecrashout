@@ -716,55 +716,62 @@ body {
 }
 
 /* ===========================
-   Share Buttons
+   Coffein Wrapped
    =========================== */
-.share-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+.wrapped-section {
+    text-align: center;
 }
 
-.btn-share {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 16px;
-    border: 1.5px solid var(--terracotta-light);
-    border-radius: var(--radius-md);
-    background: var(--bg-primary);
-    color: var(--text-primary);
+.wrapped-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.btn-wrapped {
+    width: 100%;
+    padding: 18px 24px;
+    font-size: 1.15rem;
+    font-weight: 700;
     font-family: inherit;
-    font-size: 0.85rem;
-    font-weight: 500;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, var(--sage), var(--gold-dark), var(--terracotta));
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease-in-out infinite;
+    border: none;
+    border-radius: var(--radius-lg);
     cursor: pointer;
     transition: var(--transition);
+    box-shadow: 0 4px 24px rgba(129, 199, 132, 0.3);
 }
 
-.btn-share:hover {
-    background: #FFFFFF;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
-.btn-share.whatsapp:hover {
-    border-color: #25D366;
-    color: #25D366;
+.btn-wrapped:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 35px rgba(129, 199, 132, 0.5);
 }
 
-.btn-share.twitter:hover {
-    border-color: #1DA1F2;
-    color: #1DA1F2;
+.btn-wrapped:active {
+    transform: translateY(0) scale(0.98);
 }
 
-.btn-share.copy:hover {
-    border-color: var(--sage);
-    color: var(--sage-dark);
-}
-
-.btn-share.screenshot:hover {
-    border-color: var(--gold-dark);
-    color: var(--gold-dark);
+.wrapped-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    letter-spacing: 0.3px;
 }
 
 /* ===========================
