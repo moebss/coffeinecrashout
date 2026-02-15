@@ -17,12 +17,14 @@
             margin-top: 30px;
             margin-bottom: 15px;
             font-size: 1.5rem;
+            color: var(--text-primary);
         }
 
         .legal-content h3 {
             margin-top: 20px;
             margin-bottom: 10px;
             font-size: 1.2rem;
+            color: var(--text-primary);
         }
 
         .legal-content p,
@@ -30,6 +32,15 @@
             margin-bottom: 15px;
             color: var(--text-secondary);
             line-height: 1.6;
+        }
+
+        .legal-content a {
+            color: var(--sage-dark);
+            text-decoration: none;
+        }
+
+        .legal-content a:hover {
+            text-decoration: underline;
         }
 
         .back-link {
@@ -59,36 +70,62 @@
             <h1 class="section-title">Datenschutzerklärung</h1>
 
             <h2>1. Datenschutz auf einen Blick</h2>
-            <p>Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Diese
-                Anwendung ("CoffeineCrashout") verarbeitet Ihre Eingaben (Gewicht, Alter, Konsum) ausschließlich lokal
-                in Ihrem Browser. Es werden <strong>keine</strong> Daten an unsere Server gesendet oder dort
-                gespeichert.</p>
 
-            <h2>2. Hosting und Log-Files</h2>
-            <p>Diese Seite wird bei Vercel gehostet (Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA). Der
-                Provider erhebt und speichert automatisch Informationen in so genannten Server-Log-Files, die Ihr
-                Browser automatisch übermittelt (z.B. Browsertyp, IP-Adresse, Uhrzeit). Dies dient der Sicherheit und
-                Stabilität des Angebots.</p>
+            <h3>Allgemeine Hinweise</h3>
+            <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten
+                passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie
+                persönlich identifiziert werden können.</p>
 
-            <h2>3. Einbindung von Diensten Dritter</h2>
+            <h3>Datenerfassung auf dieser Website</h3>
+            <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong><br>
+                Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber:</p>
+            <p>Alexander Rheindorf<br>
+                Pankratiusstraße 31<br>
+                50129 Bergheim<br>
+                E-Mail: info@kryptokoelsch.de</p>
 
-            <h3>Google Web Fonts</h3>
-            <p>Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten Web Fonts, die von Google bereitgestellt
-                werden. Beim Aufruf einer Seite lädt Ihr Browser die benötigten Web Fonts in ihren Browsercache. Zu
-                diesem Zweck muss der von Ihnen verwendete Browser Verbindung zu den Servern von Google aufnehmen.
-                Hierdurch erlangt Google Kenntnis darüber, dass über Ihre IP-Adresse unsere Website aufgerufen wurde.
-                Die Nutzung von Google Web Fonts erfolgt im Interesse einer einheitlichen und ansprechenden Darstellung
-                unserer Online-Angebote.</p>
+            <h2>2. Hosting</h2>
+            <p>Diese Website wird bei Vercel Inc. gehostet. Vercel kann bei Aufruf der Website Serverlogfiles erheben.
+                Weitere Informationen finden Sie in der Datenschutzerklärung von Vercel: <a
+                    href="https://vercel.com/legal/privacy-policy"
+                    target="_blank">https://vercel.com/legal/privacy-policy</a></p>
 
-            <h3>Content Delivery Networks (CDN)</h3>
-            <p>Wir verwenden Content Delivery Networks (z.B. jsDelivr), um Bibliotheken wie Chart.js oder html2canvas
-                schneller zu laden. Hierbei wird beim Laden der Dateien Ihre IP-Adresse an den jeweiligen Anbieter
-                übertragen.</p>
+            <h2>3. Datenerfassung auf unserer Website</h2>
+            <p><strong>Eingaben:</strong><br>
+                Die von Ihnen eingegebenen Daten (z.B. Gewicht, Alter, Konsum) werden nur lokal in Ihrem Browser
+                (LocalStorage) oder temporär im Arbeitsspeicher verarbeitet, um die Berechnungen durchzuführen. Eine
+                Speicherung dieser Daten auf unseren Servern erfolgt nicht bzw. nur zum Zweck der technischen
+                Übertragung und wird nicht dauerhaft mit Ihrer Person verknüpft gespeichert.</p>
 
-            <h2>4. Ihre Rechte</h2>
-            <p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten
-                (sofern vorhanden), deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie ein Recht auf
-                Berichtigung, Sperrung oder Löschung dieser Daten.</p>
+            <h2>4. Drittanbieter & Analyse</h2>
+            <p>Diese Website kann Google Analytics oder Google Ads Conversion Tracking nutzen, um die Nutzung des
+                Dienstes zu analysieren. Diese Dienste verwenden Cookies.</p>
+            <ul>
+                <li><strong>Anbieter:</strong> Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland
+                </li>
+                <li><strong>Zweck:</strong> Websiteanalyse und Werbemessung</li>
+                <li><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)</li>
+            </ul>
+            <p>Die Datenerfassung erfolgt erst, nachdem Sie über unser Cookie-Banner ausdrücklich zugestimmt haben. Sie
+                können Ihre Einwilligung jederzeit widerrufen, indem Sie die Cookies in Ihrem Browser löschen und die
+                Seite neu laden.</p>
+
+            <h2>5. Ihre Rechte</h2>
+            <p>Sie haben jederzeit das Recht:</p>
+            <ul>
+                <li>Auskunft über Ihre gespeicherten Daten zu erhalten</li>
+                <li>Berichtigung unrichtiger Daten zu verlangen</li>
+                <li>Löschung Ihrer Daten zu verlangen</li>
+                <li>Die Einschränkung der Verarbeitung zu verlangen</li>
+                <li>Der Verarbeitung zu widersprechen</li>
+                <li>Ihre Daten in einem übertragbaren Format zu erhalten</li>
+            </ul>
+
+            <h2>6. Kontakt</h2>
+            <p>Bei Fragen zum Datenschutz können Sie uns unter folgender E-Mail-Adresse erreichen: info@kryptokoelsch.de
+            </p>
+
+            <p><em>Stand: Februar 2026</em></p>
         </div>
     </div>
 </body>
