@@ -1,5 +1,5 @@
 /**
- * CoffeineCrashout – Unified Caffeine Calculation Logic
+ * CaffeineCrashout – Unified Caffeine Calculation Logic
  * Watson Formula (TBW) + EFSA Guidelines
  */
 

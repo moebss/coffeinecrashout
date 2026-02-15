@@ -4,19 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoffeineCrashout – Wie viel Koffein verträgt dein Körper?</title>
+    <title>CaffeineCrashout – Wie viel Koffein verträgt dein Körper?</title>
     <meta name="description"
         content="Finde heraus, wie viel Koffein dein Körper wirklich verträgt. Virale Koffein-Risikoanalyse mit Timeline, Badges und teilbaren Ergebnissen.">
     <meta name="theme-color" content="#F5F5F5">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="CoffeineCrashout ☕">
+    <meta property="og:title" content="CaffeineCrashout ☕">
     <meta property="og:description" content="Wie viel Koffein verträgt dein Körper wirklich?">
     <meta property="og:type" content="website">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -43,7 +46,7 @@
              =========================== -->
         <section id="landingSection" class="landing">
             <div class="landing-logo">☕</div>
-            <h1 data-i18n="app.title">CoffeineCrashout</h1>
+            <h1 data-i18n="app.title">CaffeineCrashout</h1>
             <p class="subtitle" data-i18n="app.subtitle">Wie viel Koffein verträgt dein Körper wirklich?</p>
             <button class="btn-cta" id="ctaBtn" data-i18n="app.cta">Jetzt checken ☕</button>
         </section>
@@ -202,13 +205,13 @@
                 </div>
             </div>
 
-            <!-- Coffein Wrapped -->
+            <!-- Caffeine Wrapped -->
             <div class="glass-card result-animate wrapped-section">
-                <h3 class="section-title">🎨 <span>Coffein Wrapped</span></h3>
+                <h3 class="section-title">🎨 <span>Caffeine Wrapped</span></h3>
                 <p class="wrapped-desc">Erstelle dein persönliches Koffein-Wrapped als Bild für Instagram Stories,
                     WhatsApp & Co.</p>
                 <button class="btn-wrapped" id="wrappedBtn">
-                    ☕ Erstelle dein Coffein Wrapped
+                    ☕ Erstelle dein Caffeine Wrapped
                 </button>
                 <p class="wrapped-hint">1080 × 1920 px · PNG · Instagram-Story-Format</p>
             </div>
@@ -217,8 +220,14 @@
             <button class="btn-new" id="newAnalysisBtn" data-i18n="result.newAnalysis">Neue Analyse</button>
         </section>
 
-        <!-- Footer -->
         <footer class="footer">
+            <div class="language-switcher">
+                <button class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
+                <button class="lang-btn" data-lang="en" title="English">🇺🇸</button>
+                <button class="lang-btn" data-lang="es" title="Español">🇪🇸</button>
+                <button class="lang-btn" data-lang="fr" title="Français">🇫🇷</button>
+            </div>
+
             <p data-i18n="footer.disclaimer">⚠️ Diese App ersetzt keine ärztliche Beratung. Alle Angaben ohne Gewähr.
             </p>
 

@@ -1,6 +1,6 @@
 {
     "app": {
-        "title": "CoffeineCrashout",
+        "title": "CaffeineCrashout",
         "subtitle": "How much caffeine can your body REALLY handle?",
         "cta": "Check now ☕"
     },
@@ -46,7 +46,11 @@
         "shortTerm": "Short-term Effects",
         "longTerm": "Long-term Risks",
         "newAnalysis": "New Analysis",
-        "share": "Share Results"
+        "share": "Share Results",
+        "wrappedTitle": "YOUR 2026 CAFFEINE REPORT",
+        "yearlyIntake": "Yearly Intake",
+        "bodyWater": "Body Water",
+        "didYouKnow": "DID YOU KNOW?"
     },
     "risk": {
         "low": "Totally Chill",

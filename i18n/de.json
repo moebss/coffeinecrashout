@@ -1,6 +1,6 @@
 {
     "app": {
-        "title": "CoffeineCrashout",
+        "title": "CaffeineCrashout",
         "subtitle": "Wie viel Koffein verträgt dein Körper wirklich?",
         "cta": "Jetzt checken ☕"
     },
@@ -45,7 +45,11 @@
         "shortTerm": "Kurzzeit-Effekte",
         "longTerm": "Langzeit-Risiken",
         "newAnalysis": "Neue Analyse",
-        "share": "Ergebnis teilen"
+        "share": "Ergebnis teilen",
+        "wrappedTitle": "DEIN KOFFEIN-REPORT 2026",
+        "yearlyIntake": "Jahreskonsum",
+        "bodyWater": "Körperwasser",
+        "didYouKnow": "WUSSTEST DU?"
     },
     "risk": {
         "low": "Tiefenentspannt",

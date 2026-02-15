@@ -1,5 +1,5 @@
 /* ===========================
-   CoffeineCrashout – Styles
+   CaffeineCrashout – Styles
    Natural • Earthy • Light Theme
    =========================== */
 
@@ -885,4 +885,39 @@ body {
     .drink-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+}
+
+/* ── Language Switcher ── */
+.language-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.lang-btn {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lang-btn:hover {
+    background: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lang-btn.active {
+    background: #FFFFFF;
+    border-color: #6D4C41;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

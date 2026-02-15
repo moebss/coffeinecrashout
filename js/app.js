@@ -1,5 +1,5 @@
 /**
- * CoffeineCrashout – Main Application Logic
+ * CaffeineCrashout – Main Application Logic
  */
 
 // ===========================
@@ -10,18 +10,37 @@ let translations = {};
 
 async function initLanguage() {
     const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-    currentLang = browserLang.startsWith('de') ? 'de' : 'en';
 
+    // Check for supported languages
+    if (browserLang.startsWith('de')) currentLang = 'de';
+    else if (browserLang.startsWith('es')) currentLang = 'es';
+    else if (browserLang.startsWith('fr')) currentLang = 'fr';
+    else currentLang = 'en';
+
+    // Allow override via localStorage
+    const savedLang = localStorage.getItem('appLang');
+    if (savedLang) currentLang = savedLang;
+
+    await loadLanguage(currentLang);
+}
+
+async function loadLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('appLang', lang);
     try {
-        const response = await fetch(`i18n/${currentLang}.json`);
+        const response = await fetch(`i18n/${lang}.json`);
         translations = await response.json();
     } catch (e) {
-        currentLang = 'en';
-        const response = await fetch('i18n/en.json');
-        translations = await response.json();
+        console.error('Language load failed', e);
+        // Fallback to en if not already en
+        if (lang !== 'en') await loadLanguage('en');
     }
-
     applyTranslations();
+
+    // Update active state of language switcher if it exists
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === currentLang);
+    });
 }
 
 function t(path) {
@@ -305,210 +324,205 @@ async function generateWrapped() {
     canvas.height = H;
     const ctx = canvas.getContext('2d');
 
-    // ── Background ──
-    ctx.fillStyle = '#F5F5F5';
+    // ── Helper: Draw Glass Card ──
+    const drawGlassCard = (x, y, w, h) => {
+        ctx.save();
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+        ctx.shadowBlur = 20;
+        ctx.shadowOffsetY = 10;
+        roundRect(ctx, x, y, w, h, 24);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+    };
+
+    // ── Background: Dark Coffee Gradient ──
+    const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+    bgGrad.addColorStop(0, '#1a1a1a');      // Dark Charcoal
+    bgGrad.addColorStop(0.4, '#2d1e18');    // Deep Coffee
+    bgGrad.addColorStop(1, '#3e2723');      // Espresso
+    ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, W, H);
 
-    // Decorative top bar
+    // ── ambient glow ──
+    const gradGlow = ctx.createRadialGradient(W / 2, 200, 50, W / 2, 600, 600);
+    gradGlow.addColorStop(0, 'rgba(109, 76, 65, 0.3)');
+    gradGlow.addColorStop(1, 'transparent');
+    ctx.fillStyle = gradGlow;
+    ctx.fillRect(0, 0, W, H);
+
+    // ── Top Bar ──
     const barGrad = ctx.createLinearGradient(0, 0, W, 0);
-    barGrad.addColorStop(0, '#81C784');
-    barGrad.addColorStop(0.5, '#FFD54F');
-    barGrad.addColorStop(1, '#A1887F');
+    barGrad.addColorStop(0, '#D4A373'); // Latte
+    barGrad.addColorStop(0.5, '#FFD166'); // Gold
+    barGrad.addColorStop(1, '#D4A373');
     ctx.fillStyle = barGrad;
     ctx.fillRect(0, 0, W, 12);
 
     // ── Branding ──
-    ctx.fillStyle = '#3E2723';
-    ctx.font = '900 72px "Space Grotesk", sans-serif';
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '900 64px "Space Grotesk", sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('☕ CoffeineCrashout', W / 2, 120);
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = 10;
+    ctx.fillText('CaffeineCrashout', W / 2, 120);
+    ctx.shadowBlur = 0;
 
-    ctx.font = '400 32px "Inter", sans-serif';
-    ctx.fillStyle = '#6D4C41';
-    ctx.fillText('Dein persönlicher Koffein-Report', W / 2, 175);
+    ctx.font = '500 28px "Inter", sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.letterSpacing = '2px';
+    ctx.fillText(t('result.wrappedTitle'), W / 2, 170); // OLD
 
-    // ── Divider ──
-    ctx.strokeStyle = '#D7CCC8';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(100, 220);
-    ctx.lineTo(W - 100, 220);
-    ctx.stroke();
+    // This block was replaced. Correct logic below:
+    ctx.fillText(t('result.wrappedTitle'), W / 2, 170);
 
-    // ── Badge / Personality Type ──
+    // ── Badge / Hero ──
     const badgeText = t(`badges.${r.badge}`);
-    const riskColors = { low: '#66BB6A', moderate: '#FFC107', high: '#FF8A65', extreme: '#E53935' };
-    const riskBgColors = { low: '#C8E6C9', moderate: '#FFF8E1', high: '#FFF3E0', extreme: '#FFEBEE' };
+    const riskColors = { low: '#66BB6A', moderate: '#FFCA28', high: '#FF7043', extreme: '#EF5350' };
     const riskColor = riskColors[r.riskKey];
-    const riskBg = riskBgColors[r.riskKey];
 
-    // Badge pill
-    ctx.fillStyle = riskBg;
-    roundRect(ctx, 200, 260, W - 400, 100, 50);
-    ctx.fill();
-    ctx.strokeStyle = riskColor;
-    ctx.lineWidth = 3;
-    roundRect(ctx, 200, 260, W - 400, 100, 50);
-    ctx.stroke();
+    // Glow behind badge
+    const badgeY = 320;
+    ctx.save();
+    ctx.shadowColor = riskColor;
+    ctx.shadowBlur = 60;
     ctx.fillStyle = riskColor;
-    ctx.font = '700 42px "Space Grotesk", sans-serif';
-    ctx.fillText(badgeText, W / 2, 325);
-
-    // ── Risk Label ──
-    ctx.fillStyle = '#3E2723';
-    ctx.font = '700 52px "Space Grotesk", sans-serif';
-    ctx.fillText(t(`risk.${r.riskKey}`), W / 2, 430);
-
-    ctx.font = '400 28px "Inter", sans-serif';
-    ctx.fillStyle = '#6D4C41';
-    ctx.fillText(t(`risk.${r.riskKey}Desc`), W / 2, 475);
-
-    // ── Risk Gauge ──
-    const gaugeY = 520, gaugeH = 24, gaugeW = W - 200;
-    ctx.fillStyle = '#D7CCC8';
-    roundRect(ctx, 100, gaugeY, gaugeW, gaugeH, 12);
+    ctx.beginPath();
+    ctx.arc(W / 2, badgeY, 100, 0, Math.PI * 2);
     ctx.fill();
-    const fillW = Math.max(24, (r.riskPercent / 100) * gaugeW);
+    ctx.restore();
+
+    // Badge Title
+    ctx.font = '700 80px "Space Grotesk", sans-serif';
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillText(badgeText.replace(/^[^\s]+\s/, ''), W / 2, badgeY + 160); // Remove emoji from text
+
+    // Risk Description
+    ctx.font = '400 32px "Inter", sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.fillText(t(`risk.${r.riskKey}`), W / 2, badgeY + 220);
+
+    // Large Emoji
+    const emoji = badgeText.match(/^[^\s]+/)?.[0] || '☕';
+    ctx.font = '160px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
+    ctx.fillText(emoji, W / 2, badgeY + 60);
+
+    // ── Gauge ──
+    const gaugeY = 650;
+    const gaugeW = W - 200;
+
+    // Background Track
+    ctx.fillStyle = 'rgba(255,255,255,0.1)';
+    roundRect(ctx, 100, gaugeY, gaugeW, 30, 15);
+    ctx.fill();
+
+    // Fill Track
+    const fillW = Math.max(40, (r.riskPercent / 100) * gaugeW);
     const gaugeGrad = ctx.createLinearGradient(100, 0, 100 + fillW, 0);
     gaugeGrad.addColorStop(0, '#66BB6A');
-    gaugeGrad.addColorStop(0.5, fillW > gaugeW * 0.5 ? '#FFC107' : '#81C784');
-    gaugeGrad.addColorStop(1, riskColor);
+    gaugeGrad.addColorStop(0.5, '#FFCA28');
+    gaugeGrad.addColorStop(1, '#EF5350');
+
     ctx.fillStyle = gaugeGrad;
-    roundRect(ctx, 100, gaugeY, fillW, gaugeH, 12);
+    ctx.shadowColor = riskColor;
+    ctx.shadowBlur = 20;
+    roundRect(ctx, 100, gaugeY, fillW, 30, 15);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Marker
+    ctx.fillStyle = '#FFF';
+    ctx.beginPath();
+    ctx.arc(100 + fillW, gaugeY + 15, 20, 0, Math.PI * 2);
     ctx.fill();
 
-    // Gauge labels
-    ctx.font = '500 22px "Inter", sans-serif';
+    // Gauge Labels
+    ctx.font = '600 24px "Inter", sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#66BB6A';
-    ctx.fillText('Safe', 100, gaugeY + 55);
+    ctx.fillText('Safe', 100, gaugeY + 70);
     ctx.textAlign = 'right';
-    ctx.fillStyle = '#E53935';
-    ctx.fillText('Extreme', W - 100, gaugeY + 55);
+    ctx.fillText('Crashout', W - 100, gaugeY + 70);
     ctx.textAlign = 'center';
 
-    // ── Stats Grid (2x2) ──
-    const statsY = 630;
-    const statsData = [
-        { value: `${r.caffeineMg} mg`, label: 'Täglicher Konsum' },
-        { value: `${r.limit} mg`, label: 'Dein Limit' },
-        { value: `${r.yearlyKg} kg`, label: 'Jahreskonsum' },
-        { value: `${r.tbw} L`, label: 'Körperwasser (TBW)' }
+    // ── Stats Grid ──
+    const statsY = 820;
+    const cardW = 420;
+    const cardH = 180;
+    const gap = 40;
+
+    const fmt = new Intl.NumberFormat(currentLang);
+
+    const statsConfig = [
+        { val: `${fmt.format(r.caffeineMg)}`, unit: 'mg', label: t('result.dailyIntake'), icon: '⚡' },
+        { val: `${fmt.format(r.limit)}`, unit: 'mg', label: t('result.safeLimit'), icon: '🛡️' },
+        { val: `${fmt.format(r.yearlyKg)}`, unit: 'kg', label: t('result.yearlyIntake'), icon: '⚖️' },
+        { val: `${fmt.format(r.tbw)}`, unit: 'L', label: t('result.bodyWater'), icon: '💧' }
     ];
 
-    const cardW = 400, cardH = 140, gap = 40;
-    statsData.forEach((s, i) => {
+    statsConfig.forEach((s, i) => {
         const col = i % 2;
         const row = Math.floor(i / 2);
-        const x = (W - cardW * 2 - gap) / 2 + col * (cardW + gap);
-        const y = statsY + row * (cardH + 20);
+        const x = (W - (cardW * 2 + gap)) / 2 + col * (cardW + gap);
+        const y = statsY + row * (cardH + gap);
 
+        drawGlassCard(x, y, cardW, cardH);
+
+        // Value
+        ctx.textAlign = 'left';
         ctx.fillStyle = '#FFFFFF';
-        roundRect(ctx, x, y, cardW, cardH, 16);
-        ctx.fill();
-        ctx.strokeStyle = '#D7CCC8';
-        ctx.lineWidth = 1.5;
-        roundRect(ctx, x, y, cardW, cardH, 16);
-        ctx.stroke();
+        ctx.font = '700 64px "Space Grotesk", sans-serif';
+        ctx.fillText(s.val, x + 30, y + 80);
 
-        ctx.fillStyle = '#66BB6A';
-        ctx.font = '700 44px "Space Grotesk", sans-serif';
-        ctx.fillText(s.value, x + cardW / 2, y + 60);
+        // Unit
+        ctx.font = '500 32px "Space Grotesk", sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.fillText(s.unit, x + 30 + ctx.measureText(s.val).width + 10, y + 80);
 
-        ctx.fillStyle = '#A1887F';
-        ctx.font = '600 20px "Inter", sans-serif';
-        ctx.fillText(s.label, x + cardW / 2, y + 100);
+        // Label
+        ctx.font = '500 24px "Inter", sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.fillText(s.label.toUpperCase(), x + 30, y + 130);
+
+        // Icon
+        ctx.font = '60px "Segoe UI Emoji"';
+        ctx.textAlign = 'right';
+        ctx.fillText(s.icon, x + cardW - 30, y + 90);
     });
 
-    // ── Comparison Text ──
-    const compY = statsY + 2 * (cardH + 20) + 40;
-    ctx.fillStyle = '#FFF8E1';
-    roundRect(ctx, 80, compY, W - 160, 80, 16);
-    ctx.fill();
-    ctx.strokeStyle = '#FFC107';
-    ctx.lineWidth = 1.5;
-    roundRect(ctx, 80, compY, W - 160, 80, 16);
-    ctx.stroke();
+    // ── Comparison / Fun Fact Card ──
+    const compY = statsY + 2 * (cardH + gap) + 40;
+    drawGlassCard(100, compY, W - 200, 220);
 
-    ctx.fillStyle = '#6D4C41';
-    ctx.font = '500 26px "Inter", sans-serif';
-    if (r.percentile > 50) {
-        ctx.fillText(`Mehr Koffein als ${r.percentile}% der Bevölkerung 😱`, W / 2, compY + 48);
-    } else {
-        ctx.fillText('Dein Konsum liegt im normalen Bereich ✅', W / 2, compY + 48);
-    }
+    ctx.textAlign = 'center';
 
-    // ── Effects ──
-    const fxY = compY + 130;
-    ctx.fillStyle = '#3E2723';
-    ctx.font = '700 36px "Space Grotesk", sans-serif';
-    ctx.fillText('Effekte & Risiken', W / 2, fxY);
+    // Fun Fact Header
+    ctx.fillStyle = '#FFD166';
+    ctx.font = '700 32px "Space Grotesk", sans-serif';
+    ctx.fillText(t('result.didYouKnow'), W / 2, compY + 60);
 
-    ctx.font = '500 24px "Inter", sans-serif';
-    const allEffects = [
-        ...r.shortTermEffects.map(e => ({ text: t(`effects.${e}`), type: 'short' })),
-        ...r.longTermRisks.map(e => ({ text: t(`effects.${e}`), type: 'long' }))
-    ];
-
-    if (allEffects.length === 0) {
-        allEffects.push({ text: '✅ Keine nennenswerten Risiken', type: 'none' });
-    }
-
-    // Lay out effect pills
-    let pillX = 100, pillY = fxY + 30;
-    const pillH = 44, pillGap = 12;
-    allEffects.forEach(fx => {
-        const tw = ctx.measureText(fx.text).width + 40;
-        if (pillX + tw > W - 100) {
-            pillX = 100;
-            pillY += pillH + pillGap;
-        }
-        ctx.fillStyle = fx.type === 'short' ? '#FFF8E1' : (fx.type === 'long' ? '#FFEBEE' : '#C8E6C9');
-        roundRect(ctx, pillX, pillY, tw, pillH, 22);
-        ctx.fill();
-        ctx.fillStyle = fx.type === 'short' ? '#F57F17' : (fx.type === 'long' ? '#E53935' : '#2E7D32');
-        ctx.fillText(fx.text, pillX + tw / 2, pillY + 30);
-        pillX += tw + pillGap;
-    });
-
-    // ── Fun Fact ──
-    const factY = pillY + pillH + 60;
-    ctx.fillStyle = '#FFF8E1';
-    roundRect(ctx, 80, factY, W - 160, 90, 16);
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(255,213,79,0.3)';
-    ctx.lineWidth = 1.5;
-    roundRect(ctx, 80, factY, W - 160, 90, 16);
-    ctx.stroke();
-
-    ctx.fillStyle = '#6D4C41';
-    ctx.font = '400 24px "Inter", sans-serif';
+    // Fun Fact Text
     const facts = t('funFacts');
     const factText = Array.isArray(facts) ? (facts[r.funFactIndex] || facts[0]) : '';
-    wrapText(ctx, `💡 ${factText}`, W / 2, factY + 35, W - 240, 32);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '400 32px "Inter", sans-serif';
+    wrapText(ctx, factText, W / 2, compY + 110, W - 280, 48);
 
-    // ── Half-life Info ──
-    const hlY = factY + 130;
-    ctx.fillStyle = '#A1887F';
+    // ── Footer ──
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
     ctx.font = '500 24px "Inter", sans-serif';
-    ctx.fillText(`Halbwertszeit: ${r.timeline.halfLife}h | Konzentration: ${r.concentration} mg/L`, W / 2, hlY);
+    ctx.fillText('caffeinecrashout.vercel.app', W / 2, H - 100);
 
-    // ── Footer / Branding ──
-    ctx.fillStyle = '#D7CCC8';
-    ctx.font = '400 22px "Inter", sans-serif';
-    ctx.fillText('coffeinecrashout.vercel.app', W / 2, H - 80);
-
-    ctx.fillStyle = '#A1887F';
-    ctx.font = '400 20px "Inter", sans-serif';
-    ctx.fillText('⚠️ Keine ärztliche Beratung. Alle Angaben ohne Gewähr.', W / 2, H - 45);
-
-    // Bottom bar
+    // Decorative bottom
     ctx.fillStyle = barGrad;
     ctx.fillRect(0, H - 12, W, 12);
 
     // ── Download ──
     const link = document.createElement('a');
-    link.download = `coffeine-wrapped-${Date.now()}.png`;
+    link.download = `caffeine-wrapped-${Date.now()}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
 }
@@ -638,5 +652,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     initWrapped();
     initNewAnalysis();
     initLanding();
+    // Language Switcher Listeners
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => loadLanguage(btn.dataset.lang));
+    });
+
     initParticles();
 });
