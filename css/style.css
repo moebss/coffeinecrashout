@@ -808,9 +808,47 @@ body {
     font-size: 0.8rem;
 }
 
+.footer-links {
+    margin: 12px 0;
+    font-size: 0.85rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: var(--transition);
+    border-bottom: 1px dotted transparent;
+}
+
+.footer-links a:hover {
+    color: var(--sage-dark);
+    border-bottom-color: var(--sage-dark);
+}
+
+.separator {
+    margin: 0 8px;
+    color: var(--terracotta-light);
+    opacity: 0.7;
+}
+
 .footer .made-with {
-    margin-top: 8px;
-    font-size: 0.75rem;
+    margin-top: 16px;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.footer .made-with a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid var(--gold);
+    transition: var(--transition);
+}
+
+.footer .made-with a:hover {
+    background: var(--gold-light);
+    color: var(--text-primary);
+    border-bottom-color: transparent;
 }
 
 /* ===========================

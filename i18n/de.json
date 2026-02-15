@@ -114,6 +114,8 @@
     },
     "footer": {
         "disclaimer": "⚠️ Diese App ersetzt keine ärztliche Beratung. Alle Angaben ohne Gewähr.",
-        "madeWith": "Made with ☕ and regret"
+        "madeWith": "Made with ☕ and regret",
+        "imprint": "Impressum",
+        "privacy": "Datenschutz"
     }
 }

@@ -115,6 +115,8 @@
     },
     "footer": {
         "disclaimer": "⚠️ This app does not replace medical advice. All information without guarantee.",
-        "madeWith": "Made with ☕ and regret"
+        "madeWith": "Made with ☕ and regret",
+        "imprint": "Imprint",
+        "privacy": "Privacy Policy"
     }
 }
